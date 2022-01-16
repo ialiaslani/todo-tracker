@@ -13,7 +13,7 @@ const Tasks = () => {
 
     const getAllTasks = async () => {
 
-        const { data } = await BackendMiddleware(api.getTasks, null)
+        const { data } = await BackendMiddleware(api.getTasks)
 
         if(data.data) setTasks(data.data)
 

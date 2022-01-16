@@ -21,17 +21,13 @@ const BackendMiddleware = async function (
 
     const token = localStorage.getItem('token');
     if(token) {
-        axios.interceptors.request.use(function (config) {
-            config.headers.Authorization =  `Bearer ${token}`;
 
-            return config;
-        });
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
     } else {
-        axios.interceptors.request.use(function (config) {
-            config.headers.Authorization =  null;
 
-            return config;
-        });
+        delete axios.defaults.headers.common['Authorization']
+
     }
 
     try {
