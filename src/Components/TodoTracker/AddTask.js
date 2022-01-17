@@ -34,6 +34,7 @@ const AddTask = ({onAdd}) => {
             </div>
 
             <input
+                style={{ backgroundColor: 'green' }}
                 className='btn btn-block'
                 type='submit'
                 value='Save Task'
