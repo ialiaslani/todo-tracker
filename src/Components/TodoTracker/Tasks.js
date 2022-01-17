@@ -33,6 +33,18 @@ const Tasks = () => {
 
     }
 
+
+
+    const deleteTask = async (id) => {
+
+        console.log(id)
+
+        await BackendMiddleware(api.deleteTask(id))
+
+        await getAllTasks()
+
+    }
+
     const logout = async () => {
 
         await BackendMiddleware(apiLogin.logoutUser, null)
@@ -54,10 +66,12 @@ const Tasks = () => {
             <AddTask onAdd={addTask} />
             <>
                 {
-                    tasks.length > 0 ? tasks.map(({description}, i) => (
+                    tasks.length > 0 ? tasks.map(({_id, description}) => (
                         <Task
-                            key={i}
+                            key={_id}
+                            id={_id}
                             description={description}
+                            onDelete={deleteTask}
                         />
                     )) : 'No Tasks To Show'
                 }
