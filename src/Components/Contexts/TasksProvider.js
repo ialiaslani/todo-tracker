@@ -9,6 +9,7 @@ export const TaskProvider = ({ children }) => {
 
 
     const [tasks, setTasks] = useState([])
+    const [tempTask, setTemTask] = useState('')
 
     const getAllTasks = async () => {
 
@@ -20,6 +21,10 @@ export const TaskProvider = ({ children }) => {
     }
 
     useEffect( () => {
+
+        const data = localStorage.getItem('tempTask')
+
+        setTemTask( data ? data : '')
 
         getAllTasks()
     }, []);
@@ -49,6 +54,6 @@ export const TaskProvider = ({ children }) => {
 
 
     return (
-        <TaskContext.Provider value={ { tasks, setTasks, addTask, deleteTask } } children={children} />
+        <TaskContext.Provider value={ { tasks, setTasks, addTask, deleteTask, tempTask, setTemTask } } children={children} />
     );
 }

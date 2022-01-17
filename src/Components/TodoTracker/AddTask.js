@@ -1,24 +1,31 @@
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import {TaskContext} from "../Contexts/TasksProvider";
 
 const AddTask = () => {
 
-    const [description, setDescription] = useState('');
-    const { addTask } = useContext(TaskContext)
+    const { addTask, tempTask, setTemTask } = useContext(TaskContext)
 
 
     const onSubmit = (e) => {
         e.preventDefault()
 
-        if(!description) {
+        if(!tempTask) {
             alert('Please Add Task')
             return ;
         }
 
-        addTask({ description })
+        addTask({ description: tempTask })
 
 
-        setDescription('')
+        saveTaskTemporary('')
+
+    }
+
+    const saveTaskTemporary = (data) => {
+
+        setTemTask(data)
+
+        localStorage.setItem('tempTask', tempTask)
 
     }
     
@@ -30,8 +37,8 @@ const AddTask = () => {
                 <input
                     type='text'
                     placeholder='Add Task'
-                    value={description}
-                    onChange={e => setDescription(e.target.value)}
+                    value={tempTask}
+                    onChange={e => saveTaskTemporary(e.target.value)}
                 />
             </div>
 
