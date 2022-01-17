@@ -2,34 +2,29 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from "react";
 import api from '../../Services/api/Login'
 import BackendMiddleware from "../../Services/BackendMiddleWare";
+import { useForm } from 'react-hook-form'
 
 
 const Login = () => {
 
     const navigate = useNavigate();
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const { register, handleSubmit } = useForm()
     const [reminder, setReminder] = useState(false);
 
+    const onSubmit = async (user) => {
 
-    const onSubmit = async (e) => {
-        e.preventDefault()
-
-        if(!email || !password) {
+        if(!user.email || !user.password) {
             alert('Please Fill The Form')
             return ;
         }
 
-        const { data } = await BackendMiddleware(api.loginUser, { email, password })
+        const { data } = await BackendMiddleware(api.loginUser, user)
 
         localStorage.setItem('token', data.token)
 
 
         navigate("../tasks", { replace: true });
 
-        setEmail('')
-        setPassword('')
         setReminder(false)
 
     }
@@ -37,14 +32,13 @@ const Login = () => {
     return (
         <div>
 
-            <form className='add-form' onSubmit={onSubmit}>
+            <form className='add-form' onSubmit={handleSubmit(onSubmit)}>
                 <div className='form-control'>
                     <label>Email</label>
                     <input
                         type='email'
                         placeholder='Email'
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
+                        {...register("email", { required: true })}
                     />
                 </div>
                 <div className='form-control'>
@@ -52,10 +46,10 @@ const Login = () => {
                     <input
                         type='password'
                         placeholder='Password'
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        {...register("password", { required: true, minLength: 8 })}
                     />
                 </div>
+
                 <div className='form-control form-control-check'>
                     <input
                         value={reminder}
