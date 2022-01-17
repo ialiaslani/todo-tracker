@@ -1,10 +1,12 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {TaskContext} from "../Contexts/TasksProvider";
 
-const AddTask = ({onAdd}) => {
+const AddTask = () => {
 
     const [description, setDescription] = useState('');
-    
-    
+    const { addTask } = useContext(TaskContext)
+
+
     const onSubmit = (e) => {
         e.preventDefault()
 
@@ -13,7 +15,7 @@ const AddTask = ({onAdd}) => {
             return ;
         }
 
-        onAdd({ description })
+        addTask({ description })
 
 
         setDescription('')

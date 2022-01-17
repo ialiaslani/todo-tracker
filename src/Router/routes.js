@@ -1,7 +1,7 @@
 // Components
 import Login from '../Components/Login/Login'
 import Signup from '../Components/Login/Signup'
-import Tasks from '../Components/TodoTracker/Tasks'
+import TodoTracker from '../Components/TodoTracker/TodoTracker'
 
 // Routes
 const Routes = [
@@ -15,7 +15,7 @@ const Routes = [
     },
     {
         path        : '/tasks',
-        element   : <Tasks />,
+        element   : <TodoTracker />,
     }
 ]
 
