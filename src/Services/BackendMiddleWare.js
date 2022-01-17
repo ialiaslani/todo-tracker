@@ -19,16 +19,14 @@ const BackendMiddleware = async function (
             document.getElementById('common'))
     }
 
-    const token = localStorage.getItem('token');
-    if(token) {
 
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    axios.interceptors.request.use(async req => {
 
-    } else {
+        req.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+        return req
+    })
 
-        delete axios.defaults.headers.common['Authorization']
 
-    }
 
     try {
         let res = await serviceFunction(payload) ;
