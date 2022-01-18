@@ -1,9 +1,11 @@
 import {useContext} from "react";
 import {TaskContext} from "../Contexts/TasksProvider";
+import useLocalStorage from "../../Hooks/useLocalStorage";
 
 const AddTask = () => {
 
-    const { addTask, tempTask, setTemTask } = useContext(TaskContext)
+    const [ tempTask, setTemTask ] = useLocalStorage('task', '')
+    const { addTask } = useContext(TaskContext)
 
 
     const onSubmit = (e) => {
@@ -17,18 +19,10 @@ const AddTask = () => {
         addTask({ description: tempTask })
 
 
-        saveTaskTemporary('')
+        setTemTask('')
 
     }
 
-    const saveTaskTemporary = (data) => {
-
-        setTemTask(data)
-
-        localStorage.setItem('tempTask', tempTask)
-
-    }
-    
 
     return (
         <form className='add-form' onSubmit={onSubmit}>
@@ -38,7 +32,7 @@ const AddTask = () => {
                     type='text'
                     placeholder='Add Task'
                     value={tempTask}
-                    onChange={e => saveTaskTemporary(e.target.value)}
+                    onChange={e => setTemTask(e.target.value)}
                 />
             </div>
 
